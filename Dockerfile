@@ -23,6 +23,8 @@ RUN rm /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
 	
 ADD scripts/start-kafka.sh /usr/bin/start-kafka.sh
 
+RUN chmod 777 /usr/bin/start-kafka.sh
+
 # Supervisor config 
 
 ADD supervisor/kafka.conf supervisor/zookeeper.conf /etc/supervisor/conf.d/
