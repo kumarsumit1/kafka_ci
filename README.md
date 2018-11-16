@@ -13,3 +13,8 @@ docker exec -it --privileged=true my_kafka /bin/bash
 /opt/kafka_2.11-1.0.0/bin/kafka-console-producer.sh --broker-list dockerIP:9092 --topic test
 
 /opt/kafka_2.11-1.0.0/bin/kafka-console-consumer.sh --zookeeper dockerIP:2181 --topic test --from-beginning
+
+
+## About Docker file :
+It uses supervisor utility for more read :
+https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-supervisor-on-ubuntu-and-debian-vps
