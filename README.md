@@ -12,8 +12,11 @@ docker exec -it --privileged=true my_kafka /bin/bash
 
 /opt/kafka_2.11-1.0.0/bin/kafka-console-producer.sh --broker-list dockerIP:9092 --topic test
 
+/opt/kafka_2.11-1.0.0/bin/kafka-console-producer.sh --broker-list dockerIP:9092 --topic test --property "parse.key=true" --property "key.separator=:"
+
 /opt/kafka_2.11-1.0.0/bin/kafka-console-consumer.sh --bootstrap-server dockerIP:9092 --topic test --from-beginning
 
+/opt/kafka_2.11-2.1.0/bin# /opt/kafka_2.11-2.1.0/bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group group_id_1 --describe
 
 ## About Docker file :
 It uses supervisor utility for more read :
@@ -62,11 +65,14 @@ Topic-level configuration
 **Send console input to topic**
 
     $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list $KAFKA_BROKERS --topic hubble_stream
+	
+**Send console input to topic in key value format **	
+$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list $KAFKA_BROKERS --topic hubble_stream --property "parse.key=true" --property "key.separator=:"
 
 **Send data from file to topic**
 
     cat hubble_stream.dump.txt | $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list $KAFKA_BROKERS --topic hubble_stream
-
+	
 **Read data from topic to console**
 
     # ----- new way (kafka 0.10) ------
@@ -78,21 +84,21 @@ Topic-level configuration
     
     ./kafka-console-consumer.sh --bootstrap-server $KAFKA_BROKERS_1 --topic mytopic | $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list $KAFKA_BROKERS_2 --topic mytopic
 
+** To check list of group IDs**
+$KAFKA_HOME/bin/kafka-consumer-groups.sh --bootstrap-server $KAFKA_BROKERS --list	
 
 **To watch consumers per topic/partition**
 
     CONSUMER_ID=$(echo "dump"|nc localhost 2181|grep "\/consumers\/"|head -n 1|awk -F'/' '{print $3}')
-    $KAFKA_HOME/bin/kafka-consumer-offset-checker.sh --zookeeper $ZK_HOSTS --topic hubble_stream --group $CONSUMER_ID
-    
+	
+	Find group id / consumer id  using previous list command and then use following command to describe the group.
+	
+	$KAFKA_HOME/bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group python-grp-1 --describe
+	
     # Watch continuosly
-    watch -n 3 $KAFKA_HOME/bin/kafka-consumer-offset-checker.sh --zookeeper $ZK_HOSTS --topic hubble_stream --group $CONSUMER_ID   
-    
+    watch -n 3 $KAFKA_HOME/bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group python-grp-1 --describe   
+
 The expected output will be something like this
 
-    Group           Topic                          Pid Offset          logSize         Lag             Owner
-    console-consumer-27925 hubble_stream                  0   100000          100000          0               console-consumer-27925_m-C02RJ1CAG8WM.local-1481151487426-f16bdb41-0
-    console-consumer-27925 hubble_stream                  1   200000          200000          0               console-consumer-27925_m-C02RJ1CAG8WM.local-1481151487426-f16bdb41-0
-    console-consumer-27925 hubble_stream                  2   200000          200000          0               console-consumer-27925_m-C02RJ1CAG8WM.local-1481151487426-f16bdb41-0
-    console-consumer-27925 hubble_stream                  3   100000          100000          0               console-consumer-27925_m-C02RJ1CAG8WM.local-1481151487426-f16bdb41-0
-    console-consumer-27925 hubble_stream                  4   0               0               0               console-consumer-27925_m-C02RJ1CAG8WM.local-1481151487426-f16bdb41-0
-    console-consumer-27925 hubble_stream                  5   0               0               0               console-consumer-27925_m-C02RJ1CAG8WM.local-1481151487426-f16bdb41-0
+	TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                             HOST            CLIENT-ID
+	test            0          99              99              0               kafka-python-1.4.4-11a7bb9b-fffd-4556-b748-7ee1cf5754f6 /172.17.0.1     kafka-python-1.4.4

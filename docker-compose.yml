@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  kafka_service:
+    build: .
+    image: kumarsumit1/kafka_ci
+    container_name: my_kafka
+    environment :
+      - ADVERTISED_HOST=172.17.0.2
+      - ADVERTISED_PORT=9092
+      - CONNECT_PLUGIN_PATH=/data
+      - CONNECT_REST_PORT=8083
+    volumes:
+      - tmp_custom_jars:/data  
+    ports :
+      - 2181:2181
+      - 9092:9092
+      - 8083:8083
+
+volumes :
+  tmp_custom_jars:
