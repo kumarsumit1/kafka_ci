@@ -22,6 +22,15 @@ A topic is a multi-subscriber category or feed name to which records are publish
  ***First*** , they allow the log to scale beyond a size that will fit on a single server. Each individual partition must fit on the servers that host it, but a topic may have many partitions so it can handle an arbitrary amount of data. ***Second*** they act as the unit of parallelism
 
 
+# Configuration :
+* Listenrs and Advertised Listenrs   
+     https://rmoff.net/2018/08/02/kafka-listeners-explained/
+     https://www.confluent.io/blog/kafka-listeners-explained
+     
+
+
+
+
 
 https://community.hortonworks.com/questions/77336/nifi-best-practices-for-error-handling.html
 

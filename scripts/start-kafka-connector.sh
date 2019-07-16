@@ -20,7 +20,7 @@ if [ ! -z "$CONNECT_PLUGIN_PATH" ]; then
     if grep -q "^plugin.path" $KAFKA_HOME/config/connect-standalone.properties; then
         sed -r -i "s/#(plugin.path)=(.*)/\1=$CONNECT_PLUGIN_PATH/g" $KAFKA_HOME/config/connect-standalone.properties
     else
-	    echo '\n' >> $KAFKA_HOME/config/connect-standalone.properties
+	    #echo '\n' >> $KAFKA_HOME/config/connect-standalone.properties
         echo "plugin.path=$CONNECT_PLUGIN_PATH" >> $KAFKA_HOME/config/connect-standalone.properties
     fi
 fi

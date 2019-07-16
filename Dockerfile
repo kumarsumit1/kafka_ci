@@ -7,7 +7,7 @@ ENV KAFKA_HOME /opt/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"
 
 # Install Kafka, Zookeeper and other needed things 
 RUN apt-get update && \
-    apt-get install -y --allow-unauthenticated zookeeper wget supervisor dnsutils vim-tiny curl && \
+    apt-get install -y --allow-unauthenticated zookeeper wget supervisor dnsutils vim-tiny curl iputils-ping net-tools && \
 	rm -rf /var/lib/apt/lists/* && \
 	apt-get clean
 
@@ -22,16 +22,15 @@ RUN tar xfz /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz -C /opt
 RUN rm /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
 	
 ADD scripts/start-kafka.sh /usr/bin/start-kafka.sh
-
 ADD scripts/start-kafka-connector.sh /usr/bin/start-kafka-connector.sh
-
 RUN chmod 777 /usr/bin/start-kafka.sh
-
 RUN chmod 777 /usr/bin/start-kafka-connector.sh
 
+#vi custom settings
+ADD scripts/.vimrc /root/.vimrc
 # Supervisor config 
-
 ADD supervisor/kafka.conf supervisor/zookeeper.conf /etc/supervisor/conf.d/
+
 # 2181 is zookeeper, 9092 is kafka  , 8083 is kafka connect
 
 EXPOSE 2181 9092 8083

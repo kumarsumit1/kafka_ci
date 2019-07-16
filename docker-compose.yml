@@ -1,13 +1,16 @@
 version: '3'
 
 services:
-  kafka_service:
+  kafka:
     build: .
     image: kumarsumit1/kafka_ci
     container_name: my_kafka
+    hostname: kafkahost
     environment :
-      - ADVERTISED_HOST=172.17.0.2
-      - ADVERTISED_PORT=9092
+      - KAFKA_LISTENERS=INTERNAL://:29092,EXTERNAL://:9092
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://:29092,EXTERNAL://HOSTNAME:9092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
       - CONNECT_PLUGIN_PATH=/data
       - CONNECT_REST_PORT=8083
     volumes:
@@ -19,3 +22,4 @@ services:
 
 volumes :
   tmp_custom_jars:
+    external: true
