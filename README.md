@@ -6,7 +6,7 @@ docker exec -it --privileged=true my_kafka /bin/bash
 
 /opt/kafka_2.11-1.0.0/bin/kafka-topics.sh --create --zookeeper dockerIP:2181 --replication-factor 1 --partitions 1 --topic test
 
-/opt/kafka_2.11-1.0.0/bin/kafka-topics.sh --list --zookeeper dockerIP:2181
+/opt/kafka_2.11-1.0.0/bin/kafka-topics.sh --zookeeper dockerIP:2181 --list
 
 /opt/kafka_2.11-1.0.0/bin/kafka-topics.sh --zookeeper localhost:2181 --topic test --describe
 

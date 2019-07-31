@@ -82,7 +82,7 @@ echo -e '\n' >> $CONFIG_FILE
 echo "log.dir=/var/log/kafka-logs" >> $CONFIG_FILE
 echo "log.dirs=/var/log/kafka-logs" >> $CONFIG_FILE
 # Kafka Application Log Configuration
-export LOG_DIR=/var/log/kafka
+#export LOG_DIR=/var/log/kafka
 echo 'Kafka application logs set to ' $LOG_DIR
 
 # Set the zookeeper chroot
