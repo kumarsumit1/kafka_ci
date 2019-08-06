@@ -115,4 +115,3 @@ echo "Starting Kafka Connect"
 #Run Kafka connect in distributed mode
 $KAFKA_HOME/bin/connect-distributed.sh $CONFIG_FILE
 
-#curl -d @$KAFKA_HOME/config/connect-mqtt-source.json -H "Content-Type: application/json" -X POST http://localhost:8083/connectors

@@ -26,8 +26,10 @@ RUN rm /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
 	
 ADD scripts/start-kafka.sh /usr/bin/start-kafka.sh
 ADD scripts/start-kafka-connector.sh /usr/bin/start-kafka-connector.sh
+ADD scripts/load-kafka-source-sink.sh /usr/bin/load-kafka-source-sink.sh 
 RUN chmod 777 /usr/bin/start-kafka.sh
 RUN chmod 777 /usr/bin/start-kafka-connector.sh
+RUN chmod 777 /usr/bin/load-kafka-source-sink.sh
 
 #Custom settings connect-mqtt-source.properties
 ADD scripts/.vimrc /root/.vimrc
