@@ -1,6 +1,6 @@
 # Kafka
 
-
+https://dzone.com/articles/kafka-cluster-1
 ## Introduction
 1. Kafka is run as a cluster on one or more servers that can span multiple datacenters.
 2. The Kafka cluster stores streams of records in categories called topics.
